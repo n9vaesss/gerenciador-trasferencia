@@ -9,4 +9,5 @@ public class UsuarioAutenticado {
     
     private String username;
     private String password;
+
 }

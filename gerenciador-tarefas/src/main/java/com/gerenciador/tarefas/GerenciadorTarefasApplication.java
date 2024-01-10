@@ -39,13 +39,36 @@ public class GerenciadorTarefasApplication implements CommandLineRunner{
 		Role roleUsuario = new Role();
 		roleUsuario.setNome(PermissaoEnum.USUARIO);
 
+		Role roleTR = new Role();
+		roleTR.setNome(PermissaoEnum.TRANSFERENCIA);
+
 		roles.add(roleAdmin);
 		roles.add(roleUsuario);
+		roles.add(roleTR);
 
 		usuario.setRoles(roles);
 
 		usuarioService.salvarUsuario(usuario);
 
+
+		usuario = new Usuario();
+		usuario.setUsername("caio");
+		usuario.setPassword("123456");
+
+		roles = new ArrayList<>();
+
+		roleUsuario = new Role();
+		roleUsuario.setNome(PermissaoEnum.USUARIO);
+
+		roleTR = new Role();
+		roleTR.setNome(PermissaoEnum.TRANSFERENCIA);
+
+		roles.add(roleUsuario);
+		roles.add(roleTR);
+
+		usuario.setRoles(roles);
+
+		usuarioService.salvarUsuario(usuario);
 	}
 
 }

@@ -34,7 +34,7 @@ public class Usuario implements Serializable {
 
     @Column(unique = true, length = 100)
     private String username;
-    
+
     @Column(length = 150)
     private String password;
 

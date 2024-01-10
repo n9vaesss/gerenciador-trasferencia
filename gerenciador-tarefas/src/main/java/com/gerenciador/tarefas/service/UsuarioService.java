@@ -1,8 +1,10 @@
 package com.gerenciador.tarefas.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -40,7 +42,7 @@ public class UsuarioService {
     public Usuario atualizarUsuario(Usuario usuario) {
 
         usuario.setRoles(
-                 usuario.getRoles()
+                usuario.getRoles()
                         .stream()
                         .map(role -> iRoleRepository.findByNome(role.getNome()))
                         .toList());
@@ -55,5 +57,11 @@ public class UsuarioService {
 
     public List<Usuario> obtemUsuarios() {
         return this.iUsuarioRepository.findAll();
+    }
+
+    public Usuario encontrarUsuario(String username) {
+
+        Optional<Usuario> obj = iUsuarioRepository.findByUsername(username);
+		return obj.orElseThrow(() -> new ResourceNotFoundException(username));
     }
 }

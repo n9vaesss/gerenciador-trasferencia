@@ -12,13 +12,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+
 @RestController
-@RequestMapping("/usuarios")
+@RequestMapping(value = "/usuarios")
 public class UsuarioController {
 
     @Autowired
@@ -33,19 +35,25 @@ public class UsuarioController {
     }
 
     @PutMapping
-    public ResponseEntity<String> atualizarUsuario(@RequestBody Usuario usuario){
+    public ResponseEntity<String> atualizarUsuario(@RequestBody Usuario usuario) {
         Usuario usuarioSalvo = usuarioService.salvarUsuario(usuario);
 
         return new ResponseEntity<>("Novo usuario criado: " + usuarioSalvo.getUsername(), HttpStatus.OK);
     }
 
+    @GetMapping(value = "/{username}")
+    public ResponseEntity<Usuario> encontrarUsuario(@PathVariable String username) {
+        Usuario obj = usuarioService.encontrarUsuario(username);
+        return ResponseEntity.ok().body(obj);
+    }
+
     @GetMapping
-    public ResponseEntity<List<Usuario>> obtemUsuarios(){
+    public ResponseEntity<List<Usuario>> obtemUsuarios() {
         return new ResponseEntity<>(usuarioService.obtemUsuarios(), HttpStatus.OK);
     }
 
     @DeleteMapping
-    public void excluirUsuario(@RequestBody Usuario usuario){
+    public void excluirUsuario(@RequestBody Usuario usuario) {
         usuarioService.excluirUsuario(usuario);
     }
 

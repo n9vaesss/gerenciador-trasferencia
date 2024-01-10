@@ -16,14 +16,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.gerenciador.tarefas.filter.AutenticacaoFiltro;
 import com.gerenciador.tarefas.filter.LoginFiltro;
 import com.gerenciador.tarefas.permissoes.PermissaoEnum;
-import com.gerenciador.tarefas.service.UsuarioAutenticadoService;
+
+import org.springframework.security.config.Customizer;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
-
-    @Autowired
-    private UsuarioAutenticadoService usuarioAutenticadoService;
 
     @Autowired
     private AuthenticationConfiguration authenticationConfiguration;
@@ -42,21 +40,28 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        http.csrf(crsf -> crsf.disable())
+        http
+                .cors(Customizer.withDefaults())
+                .csrf(crsf -> crsf.disable())
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/login").permitAll()
                             .requestMatchers(HttpMethod.GET, "/teste").permitAll()
+
                             .requestMatchers(HttpMethod.GET, "/teste-api-bem-vindo")
                             .hasAuthority(PermissaoEnum.ADMINISTRADOR.toString())
-                            .requestMatchers(HttpMethod.GET, "/usuarios").hasAuthority(PermissaoEnum.USUARIO.toString())
+
+                            .requestMatchers(HttpMethod.GET, "/usuarios")
+                            .hasAuthority(PermissaoEnum.USUARIO.toString())
+
                             .requestMatchers(HttpMethod.POST, "/usuarios")
                             .hasAuthority(PermissaoEnum.ADMINISTRADOR.toString())
                             .anyRequest()
                             .authenticated();
                 });
 
-            http.addFilterBefore(new LoginFiltro("/login", authenticationConfiguration.getAuthenticationManager()), UsernamePasswordAuthenticationFilter.class);
-            http.addFilterBefore(new AutenticacaoFiltro(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new LoginFiltro("/login", authenticationConfiguration.getAuthenticationManager()),
+                UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new AutenticacaoFiltro(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
