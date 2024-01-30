@@ -36,9 +36,10 @@ public class UsuarioController {
 
     @PutMapping
     public ResponseEntity<String> atualizarUsuario(@RequestBody Usuario usuario) {
-        Usuario usuarioSalvo = usuarioService.salvarUsuario(usuario);
+    
+        Usuario usuarioSalvo = usuarioService.atualizarUsuario(usuario);     
 
-        return new ResponseEntity<>("Novo usuario criado: " + usuarioSalvo.getUsername(), HttpStatus.OK);
+        return new ResponseEntity<>("Usuario atualizado: " + usuarioSalvo.getUsername(), HttpStatus.OK);
     }
 
     @GetMapping(value = "/{username}")

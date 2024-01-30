@@ -45,13 +45,36 @@ public class SecurityConfiguration {
                 .csrf(crsf -> crsf.disable())
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/login").permitAll()
-                            .requestMatchers(HttpMethod.GET, "/teste").permitAll()
 
-                            .requestMatchers(HttpMethod.GET, "/teste-api-bem-vindo")
+                            .requestMatchers(HttpMethod.GET, "/roles")
+                            .hasAuthority(PermissaoEnum.ADMINISTRADOR.toString())
+
+                            .requestMatchers(HttpMethod.POST, "/transferencias")
+                            .hasAuthority(PermissaoEnum.TRANSFERENCIA.toString())
+
+                            .requestMatchers(HttpMethod.GET, "/transferencias")
+                            .hasAuthority(PermissaoEnum.TRANSFERENCIA.toString())
+
+                            .requestMatchers(HttpMethod.GET, "/entregadores")
+                            .hasAuthority(PermissaoEnum.TRANSFERENCIA.toString())
+
+                            .requestMatchers(HttpMethod.GET, "/entregadores/all")
+                            .hasAuthority(PermissaoEnum.ADMINISTRADOR.toString())
+
+                            .requestMatchers(HttpMethod.POST, "/entregadores")
+                            .hasAuthority(PermissaoEnum.ADMINISTRADOR.toString())
+
+                            .requestMatchers(HttpMethod.PUT, "/entregadores")
                             .hasAuthority(PermissaoEnum.ADMINISTRADOR.toString())
 
                             .requestMatchers(HttpMethod.GET, "/usuarios")
                             .hasAuthority(PermissaoEnum.USUARIO.toString())
+
+                            .requestMatchers(HttpMethod.PUT, "/usuarios")
+                            .hasAuthority(PermissaoEnum.ADMINISTRADOR.toString())
+
+                            .requestMatchers(HttpMethod.DELETE, "/usuarios")
+                            .hasAuthority(PermissaoEnum.ADMINISTRADOR.toString())
 
                             .requestMatchers(HttpMethod.POST, "/usuarios")
                             .hasAuthority(PermissaoEnum.ADMINISTRADOR.toString())

@@ -8,3 +8,4 @@ CREATE TABLE roles (
 INSERT INTO roles (id, nome) VALUES (1, 'ADMINISTRADOR');
 INSERT INTO roles (id, nome) VALUES (2, 'USUARIO');
 INSERT INTO roles (id, nome) VALUES (3, 'TRANSFERENCIA');
+

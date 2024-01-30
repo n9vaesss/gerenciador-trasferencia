@@ -47,7 +47,9 @@ public class UsuarioService {
                         .map(role -> iRoleRepository.findByNome(role.getNome()))
                         .toList());
 
-        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+        Usuario entity = iUsuarioRepository.getReferenceById(usuario.getId());
+        usuario.setPassword(entity.getPassword());
+
         return this.iUsuarioRepository.save(usuario);
     }
 
@@ -62,6 +64,6 @@ public class UsuarioService {
     public Usuario encontrarUsuario(String username) {
 
         Optional<Usuario> obj = iUsuarioRepository.findByUsername(username);
-		return obj.orElseThrow(() -> new ResourceNotFoundException(username));
+        return obj.orElseThrow(() -> new ResourceNotFoundException(username));
     }
 }
