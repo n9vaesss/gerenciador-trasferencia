@@ -21,7 +21,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "tranferencias")
+@Table(name = "transferencias")
 @Data
 @Getter
 @Setter

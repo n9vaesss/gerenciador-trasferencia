@@ -86,6 +86,27 @@ public class GerenciadorTarefasApplication implements CommandLineRunner {
 
 		usuarioService.salvarUsuario(usuario);
 
+		// USUARIO 3
+		usuario = new Usuario();
+		usuario.setUsername("lorriane");
+		usuario.setPassword("123456");
+		usuario.setLojaDeRegistro(LojasEnum.LOJA_2);
+
+		roles = new ArrayList<>();
+
+		roleUsuario = new Role();
+		roleUsuario.setNome(PermissaoEnum.USUARIO);
+
+		roleTR = new Role();
+		roleTR.setNome(PermissaoEnum.TRANSFERENCIA);
+
+		roles.add(roleUsuario);
+		roles.add(roleTR);
+
+		usuario.setRoles(roles);
+
+		usuarioService.salvarUsuario(usuario);
+
 		// CADASTRANDO ENTREGADORES
 
 		// ENTREGADOR 1
@@ -100,7 +121,7 @@ public class GerenciadorTarefasApplication implements CommandLineRunner {
 		entregador = new Entregador();
 		entregador.setNomeCompleto("roberto lopes de lima");
 		entregador.setCpf("4513214654321");
-		entregador.setAtivo(false);
+		entregador.setAtivo(true);
 
 		entregadorService.salvarEntregador(entregador);
 
@@ -111,8 +132,8 @@ public class GerenciadorTarefasApplication implements CommandLineRunner {
 		Transferencia transferencia = new Transferencia();
 
 		transferencia.setNumeroNota("512154");
-		transferencia.setLojaRemetente("LOJA_1");
-		transferencia.setLojaDestinatario("LOJA_2");
+		transferencia.setLojaRemetente("LOJA_2");
+		transferencia.setLojaDestinatario("LOJA_1");
 		transferencia.setStatus(StatusTransferenciaEnum.ENVIADA);
 		transferencia.setEntregador(entregador);
 		transferencia.setUsuario(usuario);
