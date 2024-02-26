@@ -59,13 +59,11 @@ public class TransferenciaService {
         return this.iTransferenciaRepository.findByStatus(StatusTransferenciaEnum.FINALIZADA);
     }
     
-    public List<Transferencia> buscarPorStatusELojaRemetentePendente(String status, String lojaRemetente) {
-        return this.iTransferenciaRepository.findByStatusAndLojaRemetente(StatusTransferenciaEnum.PENDENTE,
-        lojaRemetente);
+    public List<Transferencia> buscarPorStatusELojaRemetentePendente(List<String> status, String lojaRemetente) {
+        return this.iTransferenciaRepository.findByStatusInAndLojaRemetente(status, lojaRemetente);
     }
-
-    public List<Transferencia> buscarPorStatusELojaDestinatarioEnviada(String status, String lojaDestinatario) {
-        return this.iTransferenciaRepository.findByStatusAndLojaDestinatario(StatusTransferenciaEnum.ENVIADA,
-        lojaDestinatario);
+    
+    public List<Transferencia> buscarPorStatusELojaDestinatarioEnviada(List<String> status, String lojaDestinatario) {
+        return this.iTransferenciaRepository.findByStatusInAndLojaDestinatario(status, lojaDestinatario);
     }
 }

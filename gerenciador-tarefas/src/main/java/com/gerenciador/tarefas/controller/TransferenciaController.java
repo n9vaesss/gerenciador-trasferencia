@@ -90,16 +90,16 @@ public class TransferenciaController {
     @GetMapping("/{lojaRemetente}/pendentes")
     public ResponseEntity<List<Transferencia>> buscarPorLojaRemetentePendetes(
             @PathVariable String lojaRemetente,
-            @RequestParam(name = "status", required = false, defaultValue = "PENDENTE") String status) {
+            @RequestParam(name = "status", required = false, defaultValue = "PENDENTE,ENVIADA") List<String> status) {
         List<Transferencia> transferencias = transferenciaService.buscarPorStatusELojaRemetentePendente(status,
                 lojaRemetente);
         return ResponseEntity.ok().body(transferencias);
     }
-
+    
     @GetMapping("/{lojaDestinatario}/enviadas")
     public ResponseEntity<List<Transferencia>> buscarPorLojaDestinatarioEnviadas(
             @PathVariable String lojaDestinatario,
-            @RequestParam(name = "status", required = false, defaultValue = "ENVIADA") String status) {
+            @RequestParam(name = "status", required = false, defaultValue = "ENVIADA,PENDENTE") List<String> status) {
         List<Transferencia> transferencias = transferenciaService.buscarPorStatusELojaDestinatarioEnviada(status,
                 lojaDestinatario);
         return ResponseEntity.ok().body(transferencias);
