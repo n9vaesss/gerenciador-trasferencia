@@ -1,5 +1,8 @@
 package com.gerenciador.tarefas;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +41,21 @@ public class GerenciadorTarefasApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		// CADASTRANDO USUARIOS
+		LocalDateTime localDateTime = LocalDateTime.now();
+        
+        // Converte para ZonedDateTime usando o fuso horário padrão
+        ZonedDateTime zonedDateTime = localDateTime.atZone(ZoneId.systemDefault());
+        
+        // Ajusta para o fuso horário do Brasil
+        ZonedDateTime brasilTime = zonedDateTime.withZoneSameInstant(ZoneId.of("America/Sao_Paulo"));
+        
+        // Obtém a hora no fuso horário do Brasil
+        LocalDateTime horaBrasil = brasilTime.toLocalDateTime();
+        
+        System.out.println("Hora no Brasil: " + horaBrasil);
+		System.out.println("modificado 12/3 12:14");
+
+		// // CADASTRANDO USUARIOS
 
 		// USUARIO 1
 		Usuario usuario = new Usuario();
@@ -63,82 +80,87 @@ public class GerenciadorTarefasApplication implements CommandLineRunner {
 
 		usuario.setRoles(roles);
 
-		usuarioService.salvarUsuario(usuario);
+		try {
+			usuarioService.salvarUsuario(usuario);
+		} catch (Exception e) {
+			System.out.println("Ocorreu uma exceção: " + e.getMessage());
+		}
+		
 
-		// USUARIO 2
-		usuario = new Usuario();
-		usuario.setUsername("caio");
-		usuario.setPassword("123456");
-		usuario.setLojaDeRegistro(LojasEnum.LOJA_1);
+		// // USUARIO 2
+		// usuario = new Usuario();
+		// usuario.setUsername("caio");
+		// usuario.setPassword("123456");
+		// usuario.setLojaDeRegistro(LojasEnum.LOJA_1);
 
-		roles = new ArrayList<>();
+		// roles = new ArrayList<>();
 
-		roleUsuario = new Role();
-		roleUsuario.setNome(PermissaoEnum.USUARIO);
+		// roleUsuario = new Role();
+		// roleUsuario.setNome(PermissaoEnum.USUARIO);
 
-		roleTR = new Role();
-		roleTR.setNome(PermissaoEnum.TRANSFERENCIA);
+		// roleTR = new Role();
+		// roleTR.setNome(PermissaoEnum.TRANSFERENCIA);
 
-		roles.add(roleUsuario);
-		roles.add(roleTR);
+		// roles.add(roleUsuario);
+		// roles.add(roleTR);
 
-		usuario.setRoles(roles);
+		// usuario.setRoles(roles);
 
-		usuarioService.salvarUsuario(usuario);
+		// usuarioService.salvarUsuario(usuario);
 
-		// USUARIO 3
-		usuario = new Usuario();
-		usuario.setUsername("lorriane");
-		usuario.setPassword("123456");
-		usuario.setLojaDeRegistro(LojasEnum.LOJA_2);
+		// // USUARIO 3
+		// usuario = new Usuario();
+		// usuario.setUsername("lorriane");
+		// usuario.setPassword("123456");
+		// usuario.setLojaDeRegistro(LojasEnum.LOJA_2);
 
-		roles = new ArrayList<>();
+		// roles = new ArrayList<>();
 
-		roleUsuario = new Role();
-		roleUsuario.setNome(PermissaoEnum.USUARIO);
+		// roleUsuario = new Role();
+		// roleUsuario.setNome(PermissaoEnum.USUARIO);
 
-		roleTR = new Role();
-		roleTR.setNome(PermissaoEnum.TRANSFERENCIA);
+		// roleTR = new Role();
+		// roleTR.setNome(PermissaoEnum.TRANSFERENCIA);
 
-		roles.add(roleUsuario);
-		roles.add(roleTR);
+		// roles.add(roleUsuario);
+		// roles.add(roleTR);
 
-		usuario.setRoles(roles);
+		// usuario.setRoles(roles);
 
-		usuarioService.salvarUsuario(usuario);
+		// usuarioService.salvarUsuario(usuario);
 
-		// CADASTRANDO ENTREGADORES
+		// // CADASTRANDO ENTREGADORES
 
-		// ENTREGADOR 1
-		Entregador entregador = new Entregador();
-		entregador.setNomeCompleto("caio novaes de lima");
-		entregador.setCpf("2123165461321");
-		entregador.setAtivo(true);
+		// // ENTREGADOR 1
+		// Entregador entregador = new Entregador();
+		// entregador.setNomeCompleto("caio novaes de lima");
+		// entregador.setCpf("2123165461321");
+		// entregador.setAtivo(true);
 
-		entregadorService.salvarEntregador(entregador);
+		// entregadorService.salvarEntregador(entregador);
 
-		// ENTREGADOR 2
-		entregador = new Entregador();
-		entregador.setNomeCompleto("roberto lopes de lima");
-		entregador.setCpf("4513214654321");
-		entregador.setAtivo(true);
+		// // ENTREGADOR 2
+		// entregador = new Entregador();
+		// entregador.setNomeCompleto("roberto lopes de lima");
+		// entregador.setCpf("4513214654321");
+		// entregador.setAtivo(true);
 
-		entregadorService.salvarEntregador(entregador);
+		// entregadorService.salvarEntregador(entregador);
 
-		// CADASTRANDO TRANSFERENCIA
+		// // CADASTRANDO TRANSFERENCIA
 
-		// TRANSFERENCIA 1
+		// // TRANSFERENCIA 1
 
-		Transferencia transferencia = new Transferencia();
+		// Transferencia transferencia = new Transferencia();
 
-		transferencia.setNumeroNota("512154");
-		transferencia.setLojaRemetente("LOJA_2");
-		transferencia.setLojaDestinatario("LOJA_1");
-		transferencia.setStatus(StatusTransferenciaEnum.ENVIADA);
-		transferencia.setEntregador(entregador);
-		transferencia.setUsuario(usuario);
+		// transferencia.setNumeroNota("512154");
+		// transferencia.setLojaRemetente("LOJA_2");
+		// transferencia.setLojaDestinatario("LOJA_1");
+		// transferencia.setStatus(StatusTransferenciaEnum.ENVIADA);
+		// transferencia.setEntregador(entregador);
+		// transferencia.setUsuario(usuario);
 
-		transferenciaService.salvarTransferencia(transferencia);
+		// transferenciaService.salvarTransferencia(transferencia);
 
 	}
 

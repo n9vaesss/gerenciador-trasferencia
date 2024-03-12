@@ -2,6 +2,8 @@ package com.gerenciador.tarefas.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 import com.gerenciador.tarefas.permissoes.StatusTransferenciaEnum;
 
@@ -47,7 +49,7 @@ public class Transferencia implements Serializable {
 
     @Column(length = 100)
     @NotNull
-    private LocalDateTime horaDeRegistro = LocalDateTime.now();
+    private LocalDateTime horaDeRegistro = getHoraAtualBrasil();
 
     @Column(length = 100)
     @NotNull
@@ -64,4 +66,10 @@ public class Transferencia implements Serializable {
     @JoinColumn(name = "entregador_id")
     private Entregador entregador;
 
+    private LocalDateTime getHoraAtualBrasil() {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        ZonedDateTime zonedDateTime = localDateTime.atZone(ZoneId.systemDefault());
+        ZonedDateTime brasilTime = zonedDateTime.withZoneSameInstant(ZoneId.of("America/Sao_Paulo"));
+        return brasilTime.toLocalDateTime();
+    }
 }
